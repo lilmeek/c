@@ -1,0 +1,55 @@
+#include <stdio.h>
+
+// Function declarations
+float square(float side);
+float circle(float radius);
+float triangle(float base, float height);
+float rectangle(float width, float height);
+
+int main() {
+    float area;
+
+    // Example usage of the functions
+    area = square(5);
+    printf("Area of square = %.2f\n", area);
+
+    area = circle(3);
+    printf("Area of circle = %.2f\n", area);
+
+    area = triangle(4, 6);
+    printf("Area of triangle = %.2f\n", area);
+
+    area = rectangle(8, 10);
+    printf("Area of rectangle = %.2f\n", area);
+
+    // Compound shape 1
+    printf("Shape 1\nIt contains a semi-circle and a rectangle.\n");
+    area = circle(4)/2 + rectangle(12,8);
+    printf("Area of shape 1 = %.2f\n\n", area);
+
+    // Compound shape 2
+    printf("Shape 2\nIt contains a rectangle and a triangle.\n");
+    area = rectangle(10, 6) + triangle(5, 8);
+    printf("Area of shape 2 = %.2f\n\n", area);
+
+    // Add your own compound shapes here...
+
+    return 0;
+}
+
+// Function definitions
+float square(float side) {
+    return side * side;
+}
+
+float circle(float radius) {
+    return 3.14159 * radius * radius;
+}
+
+float triangle(float base, float height) {
+    return 0.5 * base * height;
+}
+
+float rectangle(float width, float height) {
+    return width * height;
+}
