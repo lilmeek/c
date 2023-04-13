@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    char var = 'G';
+    int var1 = 4;
+    var1 = 5;
+    printf("var1,%d\n, var %c\n", var1, var);
+    int a = 8,b =9;
+    int c = a+b;
+    printf( "%d\n", c);
+    int d = b - a;
+    int f = b / a;
+    int g = b * a;
+    int h = b%a;
+    printf("d:%d, f:%d, g:%d, h:%d\n", d, f, g, h);
+    int u =8, y= 4;
+   u +=y;
+   printf("addition,%d\n", u);
+   u -= y;
+   printf("subtraction,%d\n", u);
+   u *= y;
+   printf("mult,%d\n", u);
+   u /= y;
+   printf("division,%d\n",u);
+   u %= y;
+   printf("modulo,%d\n");
+    return 0;
+
+}
