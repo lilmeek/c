@@ -1,0 +1,78 @@
+#include <stdio.h>
+
+// Function to calculate the grade based on score
+char getGrade(float score) {
+    if (score >= 80) {
+        return 'A';
+    } else if (score >= 70) {
+        return 'B';
+    } else if (score >= 60) {
+        return 'C';
+    } else if (score >= 50) {
+        return 'D';
+    } else {
+        return 'F';
+    }
+}
+
+int main() {
+    int numStudents;
+    float sum = 0.0;
+    printf("Enter the number of students in the class: ");
+    scanf("%d", &numStudents);
+
+    // Declare array to hold marks of students
+    float marks[numStudents];
+
+    // Get the marks for each student
+    printf("Start entering their marks:\n");
+    for (int i = 0; i < numStudents; i++) {
+        printf("Enter mark for student %d: ", i+1);
+        scanf("%f", &marks[i]);
+        sum += marks[i];
+    }
+
+    // Sort the array in ascending order
+    for (int i = 0; i < numStudents-1; i++) {
+        for (int j = i+1; j < numStudents; j++) {
+            if (marks[i] > marks[j]) {
+                float temp = marks[i];
+                marks[i] = marks[j];
+                marks[j] = temp;
+            }
+        }
+    }
+
+    // Print out the marks for each student and their grade
+    printf("\nMarks for each student and their grades:\n");
+    for (int i = 0; i < numStudents; i++) {
+        printf("Student %d: Mark = %.2f, Grade = %c\n", i+1, marks[i], getGrade(marks[i]));
+    }
+
+    // Calculate the mean mark of the students
+    float mean = sum / numStudents;
+    printf("\nMean mark of students is %.2f\n", mean);
+
+    // Declare a 2-D array called studentResults to contain the data above
+    float studentResults[7][2] = {{3, 57.45}, {2, 69.29}, {2, 71.32}, {4, 65.05}, {3, 75.67}, {3, 48.65}, {1, 88.21}};
+
+    // Print out the values in the table and their grades
+    printf("\nResults for the student and their grades:\n");
+    printf("CREDIT\t|SCORE\t|GRADE\t|\n");
+    printf("--------|-------|-------|\n");
+    for (int i = 0; i < 7; i++) {
+        printf("%.2f\t|%.2f\t|%c\t|\n", studentResults[i][0], studentResults[i][1], getGrade(studentResults[i][1]));
+    }
+
+    // Calculate the CWA of the student
+    float weightedSum = 0.0;
+    float totalCredits = 0.0;
+    for (int i = 0; i < 7; i++) {
+        weightedSum += studentResults[i][0] * studentResults[i][1];
+        totalCredits += studentResults[i][0];
+    }
+    float cwa = weightedSum / totalCredits;
+    printf("\nCWA = %.2f\n", cwa);
+
+    return 0;
+}
