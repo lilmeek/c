@@ -1,0 +1,147 @@
+#include < stdio.h >
+#include < string.h >
+
+// Declare the structure for shop
+struct Shop {
+    char name[50];
+    char phone[20];
+};
+
+// Declare the structure for price
+struct Price {
+    char currency[10];
+    float amount;
+};
+
+// Declare the union for size
+union Size {
+    int digit;
+    char letter;
+    char word[20];
+};
+
+// Declare the structure for clothing
+struct Clothing {
+    int code;
+    int year;
+    struct Shop shop;
+    struct Price price;
+    union Size size;
+    int sizetype;
+};
+
+// Declare a global array for shops
+struct Shop shops[100];
+
+// Declare a global array for clothes
+struct Clothing clothes[100];
+
+// Declare global integers for shopCount and clothesCount
+int shopCount = 0;
+int clothesCount = 0;
+
+// Function to show all the shops
+void showShops() {
+    printf("SHOPS\n");
+    for(int i=0; i < shopCount; i++) {
+        printf("%d. %s\n", i+1, shops[i].name);
+    }
+}
+
+// Function to show the details of a shop
+void showDetails(int shopIndex) {
+    printf("SHOP DETAILS\n");
+    printf("Name: %s\n", shops[shopIndex].name);
+    printf("Phone: %s\n", shops[shopIndex].phone);
+}
+
+// Function to show all the clothes in a shop
+void showClothes(int shopIndex) {
+    printf("CLOTHES\n");
+    for(int i=0; i < clothesCount; i++) {
+        if(strcmp(clothes[i].shop.name, shops[shopIndex].name) == 0) {
+            printf("Code: %d, Year: %d, Price: %.2f %s, Size: ", clothes[i].code, clothes[i].year, clothes[i].price.amount, clothes[i].price.currency);
+            switch(clothes[i].sizetype) {
+                case 1:
+                    printf("%d\n", clothes[i].size.digit);
+                    break;
+                case 2:
+                    printf("%c\n", clothes[i].size.letter);
+                    break;
+                case 3:
+                    printf("%s\n", clothes[i].size.word);
+                    break;
+            }
+        }
+    }
+}
+
+// Function to add a new clothing
+void addClothing() {
+    struct Clothing newClothing;
+    printf("ADD CLOTHING\n");
+    printf("Enter code: ");
+    scanf(" %d", &newClothing.code);
+    printf("Enter year: ");
+    scanf(" %d", &newClothing.year);
+    printf("Enter shop name: ");
+    scanf(" %[^\n]", newClothing.shop.name);
+    printf("Enter shop phone: ");
+    scanf(" %[^\n]", newClothing.shop.phone);
+    printf("Enter price amount: ");
+    scanf(" %f", &newClothing.price.amount);
+    printf("Enter price currency: ");
+    scanf(" %[^\n]", newClothing.price.currency);
+    printf("Enter size type (1=digit, 2=letter, 3=word): ");
+    scanf(" %d", &newClothing.sizetype);
+    switch(newClothing.sizetype) {
+        case 1:
+            printf("Enter size digit: ");
+            scanf(" %d", &newClothing.size.digit);
+            break;
+        case 2:
+            printf("Enter size letter: ");
+            scanf(" %c", &newClothing.size.letter);
+            break;
+        case 3:
+            printf("Enter size word: ");
+            scanf(" %s", &newClothing.size.word);
+            break;
+            }
+            clothes[2] = newClothing;
+            }
+            int main() {
+    // Declare and initialize two Shop variables
+    struct Shop shop1 = {"Zara", "+123456789"};
+    struct Shop shop2 = {"H&M", "+987654321"};
+    shops[0] = shop1;
+    shops[1] = shop2;
+    shopCount = 2;
+
+    // Declare and initialize four Clothing variables
+    struct Clothing clothes1 = {1, 2022, shop1, {"USD", 49.99}, {.digit = 34}, 0};
+    struct Clothing clothes2 = {2, 2021, shop1, {"USD", 29.99}, {.word = "Small"}, 2};
+    struct Clothing clothes3 = {3, 2020, shop1, {"EUR", 59.99}, {.digit = 42}, 0};
+    struct Clothing clothes4 = {4, 2022, shop2, {"GBP", 39.99}, {.letter = 'M'}, 1};
+    clothes[0] = clothes1;
+    clothes[1] = clothes2;
+    clothes[2] = clothes3;
+    clothes[3] = clothes4;
+    clothesCount = 4;
+
+    // Show menu and process user input
+    int looping = 0;
+    do {
+        printf("CLOTHING MALL\n1.Visit Shop\t2.Add Clothing\t3.Exit\n");
+        int option;
+        scanf(" %d", &looping);
+        switch(looping) {
+            case 1: showShops(); scanf(" %d", &option); showDetails(option-1); showClothes(option-1); break;
+            case 2: addClothing(); break;
+            case 3: looping = 0; printf("Thanks for shopping :)"); break;
+            default: printf("Invalid choice\n"); break;
+        }
+    } while(looping > 0);
+
+    return 0;
+}
