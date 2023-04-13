@@ -1,80 +1,94 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <stdbool.h>
+//4 function calculator
 
-float balance = 1000.0;
 
-int authenticate(int pin) {
-    int correct_pin = 1234;
-    if (pin == correct_pin) {
-        return 1;
+void add(float *ptrm, float n);
+void sub(float *ptrm, float n);
+void mult(float *ptrm, float n);
+void division(float *ptrm, float n);
+
+int main()
+{
+
+    printf("0\t1\t2\t3\t4\t5\t6\t7\t8\t9\n+\t-\t*\t/\t\t@0\t\t#0\t");
+    char opt;
+
+
+    float m; //operand 1
+    float n; //operand 2
+    float *ptrm = &m; //referencing /results
+    _Bool status = true;
+    Start:
+        printf("start calculations :)\n");
+         printf("enter first operand\n");
+          scanf("%f",&m);
+    do {
+         printf("enter operator\n");
+         fflush(stdin);
+          scanf("%c",&opt);
+          if(opt == '@'){
+            goto Start;
+          }
+          else if(opt == '#'){
+            printf("Goodbye :(\n");
+            status = false;
+            exit(0);
+          }
+
+             printf("enter second operand\n");
+          scanf("%f",&n);
+     switch(opt){
+     case '+':add(&m,n);break;
+     case '-':sub(&m,n);break;
+     case '*':mult(&m,n);break;
+     case '/':division(&m,n);break;
+    /* case '#': printf("Goodbye :(\n");
+            status = false;
+            break;
+     case '@': goto Start;
+            break;
+     default: printf("Error :(\n");
+        goto Start;
+*/
+
+     }
     }
+     while(status);
+
+
     return 0;
 }
+void add(float *ptrm, float n)
+{
+ printf("%f+%f\n", *ptrm,n);
+ *ptrm +=n;
+ printf("%f\n",*ptrm);
 
-float requestAmount() {
-    float amount;
-    printf("Enter the amount: ");
-    scanf("%f", &amount);
-    return amount;
 }
 
-void deposit() {
-    float amount = requestAmount();
-    balance += amount;
-    printf("Amount deposited successfully.\n");
+void sub(float *ptrm, float n)
+{
+ printf("%f-%f\n", *ptrm,n);
+ *ptrm -=n;
+ printf("%f\n",*ptrm);
+
 }
 
-void withDraw(float amount) {
-    if (amount > balance) {
-        printf("Insufficient balance.\n");
-        return;
-    }
-    balance -= amount;
-    printf("Amount withdrawn successfully.\n");
+void mult(float *ptrm, float n)
+{
+ printf("%f*%f\n", *ptrm,n);
+ *ptrm *=n;
+ printf("%f\n",*ptrm);
+
 }
 
-void transfer() {
-    float amount = requestAmount();
-    printf("Enter the recipient's account number: ");
-    int recipient;
-    scanf("%d", &recipient);
-    withDraw(amount);
-    printf("Amount transferred successfully to account number %d.\n", recipient);
-}
+void division(float *ptrm, float n)
+{
+ printf("%f/%f\n", *ptrm,n);
+ *ptrm /=n;
+ printf("%f\n",*ptrm);
 
-int main(){
-    start:
-    printf("WELCOME TO ABC BANK\nEnter your four digit pin\n");
-    static int tries = 0; //make tries a static variable
-    int pin=0; 
-    scanf("%d", &pin);
-    if(authenticate(pin)){
-        int menu_item;
-        printf("Select an option\n1. Check Balance\n2. Withdrawal\n3. Deposit\n4. Transfer\n");
-        scanf("%d", &menu_item);
-        switch(menu_item){
-            case 1: printf("%g\n", balance);
-            break;
-            case 2: withDraw(requestAmount());
-            break;
-            case 3: deposit();
-            break;
-            case 4: transfer();
-            break;
-        }
-        int response;
-        printf("Would you like to perform another transaction?\n1. Yes\n2. No\n");
-        scanf("%d", &response);
-        if(response == 1){goto start;} //return to start label to enter the pin again
-    }
-    else{
-        ++tries;
-        printf("Invalid pin after %d tries\n", tries);
-        if (tries >= 4) { //if maximum tries have been reached, end the program
-            printf("Maximum attempts reached. Exiting the program.\n");
-            return 0;
-        }
-        goto start; //return to start label to enter the pin again
-    }
-    printf("Thank you for banking with us\n");
-    return 0;
 }
