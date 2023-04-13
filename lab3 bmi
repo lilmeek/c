@@ -1,0 +1,32 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    printf("Hello, User!\n");
+
+    printf("Enter your weight:");
+    char weight[10];
+    scanf("%s", &weight);
+    puts(weight);
+
+    printf("Enter your height:");
+     char height[10];
+    scanf("%s", &height);
+    puts(height);
+
+     float a = atof(weight);
+    float b = atof(height);
+    float BMI = a /(b * b);
+    printf("Your BMI is:%.2f\n", BMI);
+
+    printf("Type any character of your choice:");
+    fflush(stdin);
+    char c;
+  c = getchar();
+    putchar(c);
+
+    printf("\nExamples of programming languages:\n\t1. Java\n\t2. C++\n\"What other language do you know\?\"\n");
+
+    return 0;
+}
